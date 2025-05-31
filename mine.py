@@ -11,7 +11,8 @@ from handlers import start
 
 
 
-BOT_TOKEN_FROM_ENV = os.getenv('TELEGRAM_BOT_TOKEN')
+BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
 
 dp.include_router(base_info.router)
