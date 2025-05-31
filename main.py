@@ -11,9 +11,9 @@ from handlers import start
 
 
 
-BOT_TOKEN = os.getenv("TGBT")
-print("BOT_TOKEN from env:", repr(BOT_TOKEN))
-bot = Bot(token=BOT_TOKEN)
+#BOT_TOKEN = os.getenv("TGBT")
+#print("BOT_TOKEN from env:", repr(BOT_TOKEN))
+bot = Bot(token='7852398008:AAGCKJASB2BlrGg1hOXdp-exxUgU9zHqI7I')
 dp = Dispatcher()
 
 dp.include_router(base_info.router)
