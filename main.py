@@ -12,6 +12,7 @@ from handlers import start
 
 
 BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+print("BOT_TOKEN from env:", repr(BOT_TOKEN))
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
 
