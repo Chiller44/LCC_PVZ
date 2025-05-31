@@ -34,7 +34,7 @@ async def start_polling(message: Message, state: FSMContext):
         ], resize_keyboard=True
     )
     await message.answer('Привіт!\nДопоможу заповнити опитувальний лист.'
-                         '\nТисни "Почнемо"!', reply_markup=kbrd_stargo
+                         '\nТисни "Почнемо"!', reply_markup=kbrd_start)
 
 async def main():
     await dp.start_polling(bot)
