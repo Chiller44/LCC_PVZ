@@ -9,7 +9,7 @@ router = Router()
 @router.message(F.text=='Почнемо')
 async def winter_outside_temp(message: Message, state: FSMContext):
     await message.answer('Почнемо з параметрів зовнішнього повітря.\n'
-                         'Введіть зимову температуру зовнішнього повітря, °C', reply_markup=ReplyKeyboardRemove())
+                         'Введіть температуру зовнішнього повітря в зимовий період, °C', reply_markup=ReplyKeyboardRemove())
     await state.set_state(Airform.winter_outside_temp)
 
 @router.message(Airform.winter_outside_temp)
@@ -21,7 +21,7 @@ async def winter_outside_temp(message: Message, state: FSMContext):
         temp = float(message.text)
         if -35 <= temp <= -5:
             await state.update_data(winter_outside_temp=message.text)
-            await message.answer('Введіть зимову вологість зовнішнього повітря, %')
+            await message.answer('Введіть вологість зовнішнього повітря в зимовий період, %')
             await state.set_state(Airform.winter_outside_humidity)
         else:
             await message.answer('Введіть коректну температуру від -35 до -5, °C')
@@ -38,7 +38,7 @@ async def summer_outside_humidity(message: Message, state: FSMContext):
         humidity = float(message.text)
         if 0 < humidity <=100:
             await state.update_data(winter_outside_humidity=message.text)
-            await message.answer('Введіть літню температуру зовнішнього повітря, °C')
+            await message.answer('Введіть температуру зовнішнього повітря в літній період, °C')
             await state.set_state(Airform.summer_outside_temp)
         else:
             await message.answer('Введіть вологість в діапазоні від 0 до 100%')
@@ -54,7 +54,7 @@ async def summer_outside_humidity(message: Message, state: FSMContext):
         temp = float(message.text)
         if 21 <= temp <= 38:
             await state.update_data(summer_outside_temp=message.text)
-            await message.answer('Введіть літню вологість зовнішнього повітря, %')
+            await message.answer('Введіть вологість зовнішнього повітря в літній період, %')
             await state.set_state(Airform.summer_outside_humidity)
         else:
             await message.answer('Введіть коректну температуру від +21 до +38, °C')
@@ -105,7 +105,7 @@ async def confirm(message: Message, state: FSMContext):
         await state.set_state(AHUform.installation)
     elif message.text == 'Ні':
         await message.answer('Давайте введемо нові дані.\n'
-                             'Введіть зимову температуру зовнішнього повітря, °C', reply_markup=ReplyKeyboardRemove())
+                             'Введіть температуру зовнішнього повітря в зимовій період, °C', reply_markup=ReplyKeyboardRemove())
         await state.set_state(Airform.winter_outside_temp)
     else:
         await message.answer('Будь ласка, виберіть з клавіатури: "Так" або "Ні".')
@@ -119,7 +119,7 @@ async def handle_exhaust_winter_temp(message: Message, state: FSMContext):
         temp = float(message.text)
         if 5 <= temp <= 45:
             await state.update_data(winter_exhaust_temp=message.text)
-            await message.answer('Введіть вологість витяжного повітря взимку, %')
+            await message.answer('Введіть вологість витяжного повітря в зимовий період, %')
             await state.set_state(Airform.winter_exhaust_humidity)
         else:
             await message.answer('Введіть коректну температуру від +5 до +45, °C')
@@ -135,7 +135,7 @@ async def winter_exhaust_humidity(message: Message, state: FSMContext):
         humidity = float(message.text)
         if 0 < humidity <=100:
             await state.update_data(winter_exhaust_humidity=message.text)
-            await message.answer('Введіть витияжну температуру в літній період, °C')
+            await message.answer('Введіть температуру витяжного повітря в літній період, °C')
             await state.set_state(Airform.summer_exhaust_temp)
         else:
             await message.answer('Введіть вологість в діапазоні від 0 до 100%')
@@ -151,7 +151,7 @@ async def handle_summer_exhaust_temp(message: Message, state: FSMContext):
         temp = float(message.text)
         if 5 <= temp <= 45:
             await state.update_data(summer_exhaust_temp=message.text)
-            await message.answer('Введіть вологість витяжного повітря взимку, %')
+            await message.answer('Введіть вологість витяжного повітря в зимовий період, %')
             await state.set_state(Airform.summer_exhaust_humidity)
         else:
             await message.answer('Введіть коректну температуру від +5 до +45, °C')
