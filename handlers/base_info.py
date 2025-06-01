@@ -117,7 +117,7 @@ async def handle_type_ahu(message: Message, state: FSMContext):
         await state.set_state(Exchangerform.heating1_type)
     elif message.text == 'Припливно-витяжна':
         await state.update_data(type_ahu=message.text)
-        await message.answer('Введіть витияжну температуру в зимовий період, °C', reply_markup=ReplyKeyboardRemove())
+        await message.answer('Введіть температуру витяжного повітря в зимовий період, °C', reply_markup=ReplyKeyboardRemove())
         await state.set_state(Airform.winter_exhaust_temp)
     elif message.text == 'Витяжна':
         await state.update_data(type_ahu=message.text)
