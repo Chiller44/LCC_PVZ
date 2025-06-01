@@ -1,7 +1,7 @@
 from aiogram import Router
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
-
+from common import send_start
 from status import AHUform, Exchangerform, Airform, Param_airform, Addtinal_components
 from utills.excel_writer import generate_excel_file
 
@@ -10,6 +10,9 @@ router = Router()
 
 @router.message(Addtinal_components.valve)
 async def handle_valve(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     data = await state.get_data()
     if message.text in ['Так', 'Ні']:
         await state.update_data(valve=message.text)
@@ -38,6 +41,9 @@ async def handle_valve(message: Message, state: FSMContext):
 
 @router.message(Addtinal_components.supply_silence)
 async def handle_supply_silence(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     await state.update_data(supply_silence=message.text)
     data = await state.get_data()
     if message.text in ['910', '1090', '1390', '1600']:
@@ -90,6 +96,9 @@ async def handle_supply_silence(message: Message, state: FSMContext):
 
 @router.message(Addtinal_components.exhaust_silence)
 async def handle_exhaust_silence(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     if message.text in ['910', '1090', '1390', '1600']:
         await state.update_data(exhaust_silence=message.text)
         data = await state.get_data()

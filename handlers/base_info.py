@@ -1,13 +1,16 @@
 from aiogram import Router, F
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
-
+from common import send_start
 from status import AHUform, Exchangerform, Param_airform, Airform
 
 router = Router()
 
 @router.message(AHUform.installation)
 async def handle_installation(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     if message.text in ['Внутрішня', 'Наружна']:
         await state.update_data(installation=message.text)
         kbrd_frame = ReplyKeyboardMarkup(
@@ -22,6 +25,9 @@ async def handle_installation(message: Message, state: FSMContext):
 
 @router.message(AHUform.frame)
 async def handle_frame(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     if message.text in ['На рамі', 'Без рами']:
         await state.update_data(frame=message.text)
         kbrd_recycling = ReplyKeyboardMarkup(
@@ -36,6 +42,9 @@ async def handle_frame(message: Message, state: FSMContext):
 
 @router.message(AHUform.recycling)
 async def handle_recycling(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     if message.text == 'Ні':
         await state.update_data(recycling=message.text)
         kbrd_type_ahu = ReplyKeyboardMarkup(
@@ -55,6 +64,9 @@ async def handle_recycling(message: Message, state: FSMContext):
 
 @router.message(AHUform.percent_recycling)
 async def percent_recycling(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     try:
         percent = float(message.text)
         if 1 <= percent <= 100:
@@ -68,6 +80,9 @@ async def percent_recycling(message: Message, state: FSMContext):
 
 @router.message(AHUform.temp_recycling)
 async def handle_temp_recycling(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     try:
         temp = float(message.text)
         if 5 < temp < 50:
@@ -87,6 +102,9 @@ async def handle_temp_recycling(message: Message, state: FSMContext):
 
 @router.message(AHUform.type_ahu)
 async def handle_type_ahu(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     if message.text == 'Припливна':
         await state.update_data(type_ahu=message.text)
         kbrd_heating = ReplyKeyboardMarkup(
@@ -101,14 +119,6 @@ async def handle_type_ahu(message: Message, state: FSMContext):
         await state.update_data(type_ahu=message.text)
         await message.answer('Введіть витияжну температуру в зимовий період, °C', reply_markup=ReplyKeyboardRemove())
         await state.set_state(Airform.winter_exhaust_temp)
-        #kbrd_recuperator = ReplyKeyboardMarkup(
-        #    keyboard=[
-        #        [KeyboardButton(text='Роторний'), KeyboardButton(text='Пластинчатий')],
-        #        [KeyboardButton(text='Гліколевий'), KeyboardButton(text='Без рекуператора')]
-        #    ], resize_keyboard=True
-        #)
-        #await message.answer('Виберіть тип рекуператора', reply_markup=kbrd_recuperator)
-        #await state.set_state(AHUform.recuperation)
     elif message.text == 'Витяжна':
         await state.update_data(type_ahu=message.text)
         await message.answer('Витрата витяжного повітря, м³/год')
@@ -119,6 +129,9 @@ async def handle_type_ahu(message: Message, state: FSMContext):
 @router.message(AHUform.recuperation)
 async def handle_recuperation(message: Message, state: FSMContext):
     if message.text in ['Роторний', 'Пластинчатий', 'Без рекуператора']:
+        if message.text == "/start":
+            await send_start(message, state)
+            return
         await state.update_data(recuperation=message.text)
         kbrd_heating = ReplyKeyboardMarkup(
             keyboard=[
@@ -142,6 +155,9 @@ async def handle_recuperation(message: Message, state: FSMContext):
 
 @router.message(AHUform.type_glycol)
 async def type_glycol(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     if message.text in ['Елиленгліколь','Пропіленгліколь']:
         await state.update_data(type_glycol=message.text)
         await message.answer('Введіть відсоток гліколю в рідині', reply_markup=ReplyKeyboardRemove())
@@ -152,6 +168,9 @@ async def type_glycol(message: Message, state: FSMContext):
 
 @router.message(AHUform.percent_glycol)
 async def percent_glycol(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     try:
         percent = float(message.text)
         if 1 <= percent <= 100:

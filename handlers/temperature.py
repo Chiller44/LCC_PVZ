@@ -1,7 +1,7 @@
 from aiogram import Router, F
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
-
+from common import send_start
 from status import Airform, AHUform
 
 router = Router()
@@ -14,6 +14,9 @@ async def winter_outside_temp(message: Message, state: FSMContext):
 
 @router.message(Airform.winter_outside_temp)
 async def winter_outside_temp(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     try:
         temp = float(message.text)
         if -35 <= temp <= -5:
@@ -28,6 +31,9 @@ async def winter_outside_temp(message: Message, state: FSMContext):
 
 @router.message(Airform.winter_outside_humidity)
 async def summer_outside_humidity(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     try:
         humidity = float(message.text)
         if 0 < humidity <=100:
@@ -41,6 +47,9 @@ async def summer_outside_humidity(message: Message, state: FSMContext):
 
 @router.message(Airform.summer_outside_temp)
 async def summer_outside_humidity(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     try:
         temp = float(message.text)
         if 21 <= temp <= 38:
@@ -54,6 +63,9 @@ async def summer_outside_humidity(message: Message, state: FSMContext):
 
 @router.message(Airform.summer_outside_humidity)
 async def summer_outside_humidity(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     try:
         humidity = float(message.text)
         if 0 < humidity <= 100:
@@ -79,6 +91,9 @@ async def summer_outside_humidity(message: Message, state: FSMContext):
 
 @router.message(Airform.confirm)
 async def confirm(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     if message.text == 'Так':
         await message.answer('Ваші дані збережено', reply_markup=ReplyKeyboardRemove())
         kbrd_installation = ReplyKeyboardMarkup(
@@ -97,6 +112,9 @@ async def confirm(message: Message, state: FSMContext):
 
 @router.message(Airform.winter_exhaust_temp)
 async def handle_exhaust_winter_temp(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     try:
         temp = float(message.text)
         if 5 <= temp <= 45:
@@ -110,6 +128,9 @@ async def handle_exhaust_winter_temp(message: Message, state: FSMContext):
 
 @router.message(Airform.winter_exhaust_humidity)
 async def winter_exhaust_humidity(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     try:
         humidity = float(message.text)
         if 0 < humidity <=100:
@@ -123,6 +144,9 @@ async def winter_exhaust_humidity(message: Message, state: FSMContext):
 
 @router.message(Airform.summer_exhaust_temp)
 async def handle_summer_exhaust_temp(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     try:
         temp = float(message.text)
         if 5 <= temp <= 45:
@@ -136,6 +160,9 @@ async def handle_summer_exhaust_temp(message: Message, state: FSMContext):
 
 @router.message(Airform.summer_exhaust_humidity)
 async def winter_exhaust_humidity(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     try:
         humidity = float(message.text)
         if 0 < humidity <=100:

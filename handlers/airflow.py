@@ -1,13 +1,16 @@
 from aiogram import Router
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
-
+from common import send_start
 from status import AHUform, Exchangerform, Airform, Param_airform, Addtinal_components
 
 router = Router()
 
 @router.message(Param_airform.supply_air)
 async def handler_supply_air(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     try:
         value = float(message.text.replace(',', '.'))
         value = int(value)
@@ -26,6 +29,9 @@ async def handler_supply_air(message: Message, state: FSMContext):
 
 @router.message(Param_airform.exhaust_air)
 async def handle_exhaust_air(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     try:
         value = float(message.text.replace(',', '.'))
         value = int(value)
@@ -43,6 +49,9 @@ async def handle_exhaust_air(message: Message, state: FSMContext):
 
 @router.message(Param_airform.supply_pressure)
 async def handle_supply_pressure(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     try:
         value = float(message.text.replace(',', '.'))
         value = int(value)
@@ -65,6 +74,9 @@ async def handle_supply_pressure(message: Message, state: FSMContext):
 
 @router.message(Param_airform.exhaust_pressure)
 async def handle_exhaust_pressure(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     try:
         value = float(message.text.replace(',', '.'))
         value = int(value)

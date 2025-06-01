@@ -1,7 +1,7 @@
 from aiogram import Router
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
-
+from common import send_start
 from status import AHUform, Exchangerform, Airform, Param_airform, Addtinal_components
 from aiogram.types import FSInputFile
 from utills.excel_writer import generate_excel_file
@@ -13,6 +13,9 @@ router = Router()
 
 @router.message(Addtinal_components.supply_first_filter)
 async def handle_supply_first_filter(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     if message.text in ['Панельний G4', 'Кишеньковий G4', 'M5', 'F7', 'F8', 'F9']:
         await state.update_data(supply_first_filter=message.text)
         data = await state.get_data()
@@ -60,6 +63,9 @@ async def handle_supply_first_filter(message: Message, state: FSMContext):
 
 @router.message(Addtinal_components.exhaust_first_filter)
 async def handle_exhaust_first_filter(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     if message.text in ['Панельний G4', 'Кишеньковий G4', 'M5', 'F7', 'F8', 'F9']:
         await state.update_data(exhaust_first_filter=message.text)
         data = await state.get_data()
@@ -93,6 +99,9 @@ async def handle_exhaust_first_filter(message: Message, state: FSMContext):
 
 @router.message(Addtinal_components.confirm_supply_second_filter)
 async def handle_confirm_supply_second_filter(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     data = await  state.get_data()
     if message.text == 'Так':
         await state.update_data(confirm_supply_second_filter=message.text)
@@ -132,6 +141,9 @@ async def handle_confirm_supply_second_filter(message: Message, state: FSMContex
 
 @router.message(Addtinal_components.confirm_exhaust_second_filter)
 async def handle_confirm_supply_second_filter(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     if message.text =='Так':
         await state.update_data(confirm_exhaust_second_filter=message.text)
         kbrd_filter = ReplyKeyboardMarkup(
@@ -157,6 +169,9 @@ async def handle_confirm_supply_second_filter(message: Message, state: FSMContex
 
 @router.message(Addtinal_components.supply_second_filter)
 async def handle_supply_second_filter(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     if message.text in ['Панельний G4', 'Кишеньковий G4', 'M5', 'F7', 'F8', 'F9']:
         await state.update_data(supply_second_filter=message.text)
         data = await state.get_data()
@@ -195,6 +210,9 @@ async def handle_supply_second_filter(message: Message, state: FSMContext):
 
 @router.message(Addtinal_components.exhaust_second_filter)
 async def handle_exhaust_second_filter(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     if message.text in ['Панельний G4', 'Кишеньковий G4', 'M5', 'F7', 'F8', 'F9']:
         await state.update_data(exhaust_second_filter=message.text)
         kbrd_automation = ReplyKeyboardMarkup(
@@ -209,6 +227,9 @@ async def handle_exhaust_second_filter(message: Message, state: FSMContext):
 
 @router.message(Addtinal_components.automation)
 async def handle_exhaust_second_filter(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     if message.text in ['Так', 'Ні']:
         await state.update_data(automation=message.text)
         kbrd_notes = ReplyKeyboardMarkup(
@@ -224,6 +245,9 @@ async def handle_exhaust_second_filter(message: Message, state: FSMContext):
 
 @router.message(Addtinal_components.notes)
 async def handle_notes(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     notes_text = message.text.strip()
     if not notes_text or notes_text.lower() == "немає приміток":
         notes_text = "немає"
@@ -243,9 +267,11 @@ async def handle_notes(message: Message, state: FSMContext):
 
 @router.message(Addtinal_components.confirm_second_file)
 async def handle_confirm_second_file(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     if message.text == 'Так':
         await state.update_data(confirm_second_file=message.text)
-        await start_polling(message, state)
     elif message.text == 'Ні':
         await message.answer('Дякую! Якщо будуть ще проєкти — звертайтесь 🙂', reply_markup=ReplyKeyboardRemove())
         await state.clear()

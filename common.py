@@ -1,17 +1,10 @@
-from aiogram import Router, F
 from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton
-from aiogram.filters import CommandStart
 from aiogram.fsm.context import FSMContext
 
-router = Router()
-
-@router.message(CommandStart())
-async def cmd_start(message: Message, state: FSMContext):
+async def send_start(message: Message, state: FSMContext):
     await state.clear()
     kbrd_start = ReplyKeyboardMarkup(
-        keyboard=[
-            [KeyboardButton(text='Почнемо')]
-        ],
+        keyboard=[[KeyboardButton(text='Почнемо')]],
         resize_keyboard=True
     )
     await message.answer(
