@@ -5,7 +5,7 @@ from common import send_start
 from status import AHUform, Exchangerform, Airform, Param_airform, Addtinal_components
 from aiogram.types import FSInputFile
 from utills.excel_writer import generate_excel_file
-from handlers.start import start_polling
+
 import openpyxl
 
 
