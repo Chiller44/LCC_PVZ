@@ -1,18 +1,13 @@
 import asyncio
 import os
-from aiogram import Bot, Dispatcher, F
-from aiogram.filters import CommandStart
-from aiogram.fsm.context import FSMContext
-from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton
-from handlers import base_info, temperature, heat_exchanger, airflow, components, filters
-from status import Addtinal_components
+from aiogram import Bot, Dispatcher
+from handlers import base_info, temperature, heat_exchanger, airflow, components, filters, contact_info
 from handlers import start
 
 
 
 
 BOT_TOKEN = os.getenv("TGBT")
-#print("BOT_TOKEN from env:", repr(BOT_TOKEN))
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
 
@@ -23,6 +18,7 @@ dp.include_router(airflow.router)
 dp.include_router(components.router)
 dp.include_router(filters.router)
 dp.include_router(start.router)
+dp.include_router(contact_info.router)
 
 
 

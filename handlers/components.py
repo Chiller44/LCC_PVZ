@@ -1,9 +1,9 @@
 from aiogram import Router
 from aiogram.fsm.context import FSMContext
-from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
+from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton
 from common import send_start
-from status import AHUform, Exchangerform, Airform, Param_airform, Addtinal_components
-from utills.excel_writer import generate_excel_file
+from status import Addtinal_components
+
 
 
 router = Router()

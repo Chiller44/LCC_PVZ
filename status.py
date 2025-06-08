@@ -68,6 +68,10 @@ class Addtinal_components(StatesGroup):
     notes = State()
     confirm_second_file = State()
 
+class Contact_info(StatesGroup):
+    contact_name = State()
+    contact_phone = State()
+    organization = State()
 
 
 

@@ -1,4 +1,4 @@
-from aiogram import Router, F
+from aiogram import Router
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
 from common import send_start
@@ -70,7 +70,7 @@ async def percent_recycling(message: Message, state: FSMContext):
     try:
         percent = float(message.text)
         if 1 <= percent <= 100:
-            await state.update_data(percent_recycling=message.text)
+            await state.update_data(percent_recycling=percent)
             await message.answer('Введіть температуру рециркуляційного повітря, °C')
             await state.set_state(AHUform.temp_recycling)
         else:
@@ -86,7 +86,7 @@ async def handle_temp_recycling(message: Message, state: FSMContext):
     try:
         temp = float(message.text)
         if 5 < temp < 50:
-            await state.update_data(temp_recycling=message.text)
+            await state.update_data(temp_recycling=temp)
             kbrd_type_ahu = ReplyKeyboardMarkup(
                 keyboard=[
                     [KeyboardButton(text='Припливна'), KeyboardButton(text='Витяжна')],
@@ -128,10 +128,10 @@ async def handle_type_ahu(message: Message, state: FSMContext):
 
 @router.message(AHUform.recuperation)
 async def handle_recuperation(message: Message, state: FSMContext):
+    if message.text == "/start":
+        await send_start(message, state)
+        return
     if message.text in ['Роторний', 'Пластинчатий', 'Без рекуператора']:
-        if message.text == "/start":
-            await send_start(message, state)
-            return
         await state.update_data(recuperation=message.text)
         kbrd_heating = ReplyKeyboardMarkup(
             keyboard=[
@@ -174,7 +174,7 @@ async def percent_glycol(message: Message, state: FSMContext):
     try:
         percent = float(message.text)
         if 1 <= percent <= 100:
-            await state.update_data(percent_glycol=message.text)
+            await state.update_data(percent_glycol=percent)
             kbrd_heating = ReplyKeyboardMarkup(
                 keyboard=[
                     [KeyboardButton(text='Водяний')], [KeyboardButton(text='Електричний')],
